@@ -1,0 +1,81 @@
+stages:
+  - lint
+  - test
+  - report
+
+variables:
+  POETRY_NO_INTERACTION: 1
+  POETRY_VIRTUALENVS_IN_PROJECT: "true"
+
+# Stage 1: Linting and Formatting Check
+lint-and-format:
+  stage: lint
+  image: python:3.9
+  before_script:
+    - pip install poetry
+    - poetry install --with dev
+  script:
+    - poetry run black --check .
+    - poetry run ruff .
+    - poetry run isort --check-only .
+  allow_failure: false
+
+# Template for team-specific test jobs
+.test_template:
+  stage: test
+  image: mcr.microsoft.com/playwright/python:v1.39.0-jammy
+  before_script:
+    - pip install poetry
+    - poetry install --with dev
+    - poetry run playwright install
+  script:
+    - poetry -C $TEAM_DIR install
+    - poetry -C $TEAM_DIR run pytest -n auto --dist=loadscope --alluredir=$CI_PROJECT_DIR/allure-results
+  artifacts:
+    when: always
+    paths:
+      - allure-results/
+      - videos/
+      - screenshots/
+    expire_in: 1 day
+
+# Job for Team Alpha
+test:team_alpha:
+  extends: .test_template
+  variables:
+    TEAM_DIR: src/teams/team_alpha
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      changes:
+        - src/teams/team_alpha/**/*
+        - src/core/**/*
+    - if: '$CI_COMMIT_BRANCH == "main"'
+
+# Job for additional teams (example)
+# test:team_beta:
+#   extends: .test_template
+#   variables:
+#     TEAM_DIR: src/teams/team_beta
+#   rules:
+#     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+#       changes:
+#         - src/teams/team_beta/**/*
+#         - src/core/**/*
+#     - if: '$CI_COMMIT_BRANCH == "main"'
+
+# Stage 3: Generate and Deploy Allure Report
+generate-report:
+  stage: report
+  image: frankescobar/allure-docker-service:latest
+  script:
+    - allure generate allure-results --clean -o allure-report
+  artifacts:
+    when: always
+    paths:
+      - allure-report/
+    expire_in: 7 days
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      when: on_success
+  dependencies:
+    - test:team_alpha

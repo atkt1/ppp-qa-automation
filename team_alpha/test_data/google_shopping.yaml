@@ -1,0 +1,45 @@
+# Google Shopping Test Data
+# This file contains test data for Google Shopping tests
+
+products:
+  samsung_s24_ultra:
+    search_term: "samsung s24 ultra"
+    expected_keywords:
+      - "Samsung"
+      - "S24"
+      - "Ultra"
+    min_price: 800
+    max_price: 1500
+    description: "Samsung Galaxy S24 Ultra flagship smartphone"
+
+  iphone_15_pro:
+    search_term: "iphone 15 pro"
+    expected_keywords:
+      - "iPhone"
+      - "15"
+      - "Pro"
+    min_price: 900
+    max_price: 1300
+    description: "Apple iPhone 15 Pro"
+
+  pixel_8_pro:
+    search_term: "pixel 8 pro"
+    expected_keywords:
+      - "Pixel"
+      - "8"
+      - "Pro"
+      - "Google"
+    min_price: 700
+    max_price: 1000
+    description: "Google Pixel 8 Pro"
+
+# Expected result counts
+result_counts:
+  minimum_results: 3
+  maximum_results: 100
+
+# Test configurations
+config:
+  timeout: 30
+  retry_attempts: 3
+  wait_for_results: 5

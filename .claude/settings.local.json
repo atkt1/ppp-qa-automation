@@ -1,0 +1,35 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mv:*)",
+      "Bash(poetry install:*)",
+      "Bash(awk:*)",
+      "Bash(unset:*)",
+      "Bash(poetry run pytest:*)",
+      "Bash(find:*)",
+      "Bash(env)",
+      "Bash(make help:*)",
+      "Bash(make test-one-headed:*)",
+      "Bash(poetry run python:*)",
+      "Bash(make test-one:*)",
+      "Bash(make test-collect:*)",
+      "Bash(make test-api:*)",
+      "Bash(cat:*)",
+      "Bash(curl:*)",
+      "Bash(python3:*)",
+      "Bash(make test-web:*)",
+      "Bash(echo:*)",
+      "Bash(brew list:*)",
+      "Bash(make install-allure:*)",
+      "Bash(allure:*)",
+      "Bash(make allure-report:*)",
+      "Bash(open:*)",
+      "Bash(HEADLESS=true poetry run pytest:*)",
+      "Bash(make clean-videos:*)",
+      "Bash(poetry show:*)",
+      "Bash(poetry add:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
