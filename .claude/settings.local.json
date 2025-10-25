@@ -27,7 +27,8 @@
       "Bash(HEADLESS=true poetry run pytest:*)",
       "Bash(make clean-videos:*)",
       "Bash(poetry show:*)",
-      "Bash(poetry add:*)"
+      "Bash(poetry add:*)",
+      "Bash(tree:*)"
     ],
     "deny": [],
     "ask": []
