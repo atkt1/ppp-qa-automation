@@ -52,8 +52,8 @@ class GoogleSearchLocators:
 
     # Page Elements
     GOOGLE_LOGO = 'img[alt*="Google"]'
-    SEARCH_RESULTS_CONTAINER = '#search'
-    RESULT_STATS = '#result-stats'
+    SEARCH_RESULTS_CONTAINER = "#search"
+    RESULT_STATS = "#result-stats"
 
     # Error/CAPTCHA
     CAPTCHA_CONTAINER = 'div[id*="captcha"]'
@@ -70,22 +70,17 @@ class GoogleShoppingLocators:
     """
 
     # Product Listing Elements
-    PRODUCT_ITEMS = 'div[data-merchant-id], div.sh-dgr__content'
-    PRODUCT_ITEM_GRID = 'div.sh-dgr__grid-result'
-    PRODUCT_CARD = 'div[data-docid]'
+    PRODUCT_ITEMS = "div[data-merchant-id], div.sh-dgr__content"
+    PRODUCT_ITEM_GRID = "div.sh-dgr__grid-result"
+    PRODUCT_CARD = "div[data-docid]"
 
     # Product Details
     PRODUCT_TITLE = 'h3, h4, div[role="heading"]'
-    PRODUCT_PRICE = (
-        'span[aria-label*="$"], '
-        'span:has-text("$"), '
-        'div.a8Pemb, '
-        'span.HRLxBb'
-    )
+    PRODUCT_PRICE = 'span[aria-label*="$"], ' 'span:has-text("$"), ' "div.a8Pemb, " "span.HRLxBb"
     PRODUCT_IMAGE = 'img[src*="encrypted"], img[src*="gstatic"]'
     PRODUCT_RATING = 'span[role="img"][aria-label*="stars"]'
     PRODUCT_REVIEWS = 'span.NrDZNb, span:has-text("reviews")'
-    PRODUCT_MERCHANT = 'div.aULzUe, span.IuHnof'
+    PRODUCT_MERCHANT = "div.aULzUe, span.IuHnof"
     PRODUCT_SHIPPING = 'span:has-text("shipping"), span:has-text("delivery")'
 
     # Product Actions
@@ -135,8 +130,8 @@ class GoogleShoppingLocators:
 
     # Empty State
     NO_RESULTS = 'div:has-text("No results found")'
-    NO_RESULTS_MESSAGE = 'div.mnr-c'
+    NO_RESULTS_MESSAGE = "div.mnr-c"
 
     # Loading States
     LOADING_SPINNER = 'div[role="progressbar"]'
-    LOADING_PLACEHOLDER = 'div.sh-dgr__placeholder'
+    LOADING_PLACEHOLDER = "div.sh-dgr__placeholder"

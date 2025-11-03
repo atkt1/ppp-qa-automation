@@ -19,12 +19,12 @@ Usage:
 """
 
 import time
-from typing import Callable, Any, TypeVar, Optional, Tuple
 from functools import wraps
+from typing import Any, Callable, Optional, Tuple, TypeVar
+
 from core.logger import log
 
-
-T = TypeVar('T')
+T = TypeVar("T")
 
 
 def wait_with_retry(
@@ -33,7 +33,7 @@ def wait_with_retry(
     wait_time: float = 2.0,
     exponential_backoff: bool = False,
     exceptions: Tuple[type, ...] = (Exception,),
-    on_retry: Optional[Callable[[int, Exception], None]] = None
+    on_retry: Optional[Callable[[int, Exception], None]] = None,
 ) -> T:
     """
     Execute function with retry logic.
@@ -115,7 +115,7 @@ def retry_on_exception(
     wait_time: float = 2.0,
     exponential_backoff: bool = False,
     exceptions: Tuple[type, ...] = (Exception,),
-    log_attempts: bool = True
+    log_attempts: bool = True,
 ) -> Callable:
     """
     Decorator to automatically retry a function on exception.
@@ -139,6 +139,7 @@ def retry_on_exception(
         ... def click_element(locator):
         ...     element.click()
     """
+
     def decorator(func: Callable[..., T]) -> Callable[..., T]:
         @wraps(func)
         def wrapper(*args, **kwargs) -> T:
@@ -163,10 +164,7 @@ def retry_on_exception(
                         raise
 
                     if log_attempts:
-                        log.warning(
-                            f"{func.__name__}: Attempt {attempt} failed: "
-                            f"{type(e).__name__}: {str(e)}"
-                        )
+                        log.warning(f"{func.__name__}: Attempt {attempt} failed: " f"{type(e).__name__}: {str(e)}")
 
                     time.sleep(current_wait)
 
@@ -174,6 +172,7 @@ def retry_on_exception(
                         current_wait *= 2
 
         return wrapper
+
     return decorator
 
 
@@ -182,7 +181,7 @@ def wait_for_condition(
     timeout: float = 30.0,
     poll_interval: float = 0.5,
     error_message: str = "Condition not met within timeout",
-    suppress_errors: bool = True
+    suppress_errors: bool = True,
 ) -> bool:
     """
     Wait for a condition to become true.
@@ -251,7 +250,7 @@ def wait_for_value_change(
     initial_value: Any = None,
     timeout: float = 30.0,
     poll_interval: float = 0.5,
-    error_message: str = "Value did not change within timeout"
+    error_message: str = "Value did not change within timeout",
 ) -> Any:
     """
     Wait for a value to change from its initial value.
@@ -297,7 +296,7 @@ def wait_for_value_change(
         condition,
         timeout=timeout,
         poll_interval=poll_interval,
-        error_message=error_message
+        error_message=error_message,
     )
 
     # Return new value
@@ -308,7 +307,7 @@ def retry_with_timeout(
     func: Callable[[], T],
     timeout: float = 30.0,
     retry_interval: float = 1.0,
-    exceptions: Tuple[type, ...] = (Exception,)
+    exceptions: Tuple[type, ...] = (Exception,),
 ) -> T:
     """
     Retry function until it succeeds or timeout is reached.

@@ -1,7 +1,8 @@
 import pytest
 from playwright.sync_api import APIRequestContext
-from team_alpha.api_clients.reqres_api_client import ReqResApiClient
+
 from core.logger import log
+from team_alpha.api_clients.reqres_api_client import ReqResApiClient
 
 # Note: Fixtures from core/conftest.py are automatically discovered by pytest
 # No manual imports needed in simplified structure!

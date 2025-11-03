@@ -1,16 +1,20 @@
 import os
-import pytest
 from typing import Generator
-from playwright.sync_api import Playwright, APIRequestContext, Browser, BrowserContext
+
+import pytest
+from playwright.sync_api import APIRequestContext, BrowserContext, Playwright
+
 from core.config import config
 from core.logger import log
 
 
 @pytest.fixture(scope="session")
-def api_request_context(playwright: Playwright) -> Generator[APIRequestContext, None, None]:
+def api_request_context(
+    playwright: Playwright,
+) -> Generator[APIRequestContext, None, None]:
     """
     Session-scoped API request context with authentication headers.
-    
+
     This fixture creates a persistent API context that can be used across
     all tests in a session, reducing setup overhead.
     """
@@ -26,13 +30,10 @@ def api_request_context(playwright: Playwright) -> Generator[APIRequestContext, 
     if config.api_auth_token:
         headers["X-API-Key"] = config.api_auth_token
 
-    request_context = playwright.request.new_context(
-        base_url=config.api_base_url,
-        extra_http_headers=headers
-    )
-    
+    request_context = playwright.request.new_context(base_url=config.api_base_url, extra_http_headers=headers)
+
     yield request_context
-    
+
     log.info("Disposing API request context")
     request_context.dispose()
 
@@ -50,11 +51,13 @@ def browser_type_launch_args(browser_type_launch_args: dict) -> dict:
 
     if config.headless:
         # In headless mode, set explicit window size (maximized dimensions)
-        args.extend([
-            "--window-size=1920,1080",
-            "--no-sandbox",
-            "--disable-dev-shm-usage",
-        ])
+        args.extend(
+            [
+                "--window-size=1920,1080",
+                "--no-sandbox",
+                "--disable-dev-shm-usage",
+            ]
+        )
     else:
         # In headed mode, maximize the window
         args.append("--start-maximized")
@@ -103,17 +106,17 @@ def browser_context_args(browser_context_args: dict) -> dict:
 def page(context: BrowserContext):
     """
     Function-scoped page fixture with enhanced error handling and logging.
-    
+
     Each test gets a fresh page instance.
     """
     page = context.new_page()
     page.set_default_timeout(30000)  # 30 seconds default timeout
-    
+
     # Log navigation events
     page.on("console", lambda msg: log.debug(f"Browser console: {msg.text}"))
-    
+
     yield page
-    
+
     # Cleanup
     page.close()
 
@@ -137,6 +140,7 @@ def take_screenshot(page):
     """
     Fixture to easily capture screenshots on demand.
     """
+
     def _screenshot(name: str):
         screenshot_dir = "screenshots"
         os.makedirs(screenshot_dir, exist_ok=True)
@@ -144,7 +148,7 @@ def take_screenshot(page):
         page.screenshot(path=path, full_page=True)
         log.info(f"Screenshot saved: {path}")
         return path
-    
+
     return _screenshot
 
 
@@ -155,7 +159,7 @@ def pytest_runtest_makereport(item, call):
     """
     outcome = yield
     rep = outcome.get_result()
-    
+
     # Check if test failed and has a page fixture
     if rep.when == "call" and rep.failed:
         if "page" in item.fixturenames:

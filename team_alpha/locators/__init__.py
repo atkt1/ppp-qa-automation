@@ -25,15 +25,12 @@ Helper Functions:
 """
 
 # Import all locator classes from the single locators.py file
-from team_alpha.locators.locators import (
-    GoogleSearchLocators,
-    GoogleShoppingLocators,
-)
+from team_alpha.locators.locators import GoogleSearchLocators, GoogleShoppingLocators
 
 # Define what gets exported when using "from team_alpha.locators import *"
 __all__ = [
-    'GoogleSearchLocators',
-    'GoogleShoppingLocators',
+    "GoogleSearchLocators",
+    "GoogleShoppingLocators",
 ]
 
 
@@ -69,8 +66,4 @@ def get_locators(locator_class):
         >>> print(locators['SEARCH_INPUT'])
         'textarea[name="q"], input[name="q"]'
     """
-    return {
-        name: value
-        for name, value in vars(locator_class).items()
-        if not name.startswith('_') and isinstance(value, str)
-    }
+    return {name: value for name, value in vars(locator_class).items() if not name.startswith("_") and isinstance(value, str)}

@@ -5,7 +5,7 @@ Provides foundational classes that should be extended by
 team-specific implementations.
 """
 
-from core.base.page_base import BasePage
 from core.base.api_client import BaseApiClient
+from core.base.page_base import BasePage
 
-__all__ = ['BasePage', 'BaseApiClient']
+__all__ = ["BasePage", "BaseApiClient"]

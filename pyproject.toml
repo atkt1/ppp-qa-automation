@@ -29,12 +29,12 @@ build-backend = "poetry.core.masonry.api"
 
 # Tool Configurations
 [tool.black]
-line-length = 88
+line-length = 130
 target-version = ['py39']
 
 [tool.ruff]
 select = ["E", "F", "W", "I", "N"]
-line-length = 88
+line-length = 130
 
 [tool.isort]
 profile = "black"

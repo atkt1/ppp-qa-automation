@@ -1,9 +1,10 @@
 import allure
 import pytest
 from playwright.sync_api import Page
+
 from team_alpha.pages.google_search_page import GoogleSearchPage
 from team_alpha.pages.google_shopping_page import GoogleShoppingPage
-from team_alpha.test_data import load_product_data, get_result_config
+from team_alpha.test_data import get_result_config, load_product_data
 
 
 @pytest.mark.team_alpha
@@ -13,10 +14,10 @@ from team_alpha.test_data import load_product_data, get_result_config
 class TestGoogleShopping:
     """
     Test suite for Google Shopping functionality.
-    
+
     Tests cover searching for products and extracting pricing information.
     """
-    
+
     @pytest.mark.smoke
     @allure.title("Search for Samsung S24 Ultra and Get Price")
     @allure.description("Search for Samsung S24 Ultra on Google Shopping and extract the first listing price")
@@ -60,7 +61,7 @@ class TestGoogleShopping:
             allure.attach(
                 price,
                 name="First Product Price",
-                attachment_type=allure.attachment_type.TEXT
+                attachment_type=allure.attachment_type.TEXT,
             )
 
             print(f"\n{'='*60}")
@@ -70,7 +71,7 @@ class TestGoogleShopping:
         with allure.step("Verify price was extracted"):
             assert price != "Price not found", "Failed to extract price from first listing"
             assert "$" in price, f"Price format unexpected: {price}"
-    
+
     @allure.title("Get Samsung S24 Ultra Product Details")
     @allure.description("Extract complete product details including title and price")
     @allure.severity(allure.severity_level.NORMAL)
@@ -98,18 +99,18 @@ class TestGoogleShopping:
             allure.attach(
                 details_text,
                 name="Product Details",
-                attachment_type=allure.attachment_type.TEXT
+                attachment_type=allure.attachment_type.TEXT,
             )
 
             print(f"\n{'='*60}")
-            print(f"Product Details:")
+            print("Product Details:")
             print(f"  Title: {details['title']}")
             print(f"  Price: {details['price']}")
             print(f"{'='*60}\n")
 
         with allure.step("Verify details were extracted"):
-            assert details['price'] != "Price not found", "Failed to extract price"
-    
+            assert details["price"] != "Price not found", "Failed to extract price"
+
     @allure.title("Verify Multiple Shopping Results Displayed")
     @allure.description("Check that multiple product listings are displayed")
     @allure.severity(allure.severity_level.MINOR)
@@ -136,11 +137,12 @@ class TestGoogleShopping:
             allure.attach(
                 str(product_count),
                 name="Product Count",
-                attachment_type=allure.attachment_type.TEXT
+                attachment_type=allure.attachment_type.TEXT,
             )
 
             print(f"\nFound {product_count} product listings\n")
 
         with allure.step("Verify multiple results exist"):
-            assert product_count >= result_config.minimum_results, \
-                f"Expected at least {result_config.minimum_results} products, found {product_count}"
+            assert (
+                product_count >= result_config.minimum_results
+            ), f"Expected at least {result_config.minimum_results} products, found {product_count}"
