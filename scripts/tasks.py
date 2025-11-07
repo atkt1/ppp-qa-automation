@@ -15,7 +15,6 @@ Usage:
 import subprocess
 import sys
 from pathlib import Path
-from typing import List
 
 
 def run_command(cmd: str, cwd: Path = None) -> int:
@@ -310,33 +309,48 @@ def list_commands() -> None:
     print_header("Available Poetry Script Commands")
 
     commands = [
-        ("Format & Lint", [
-            ("format", "Format and lint code (isort → black → ruff → validate-yaml)"),
-            ("lint", "Run linting with ruff (check only)"),
-            ("lint-fix", "Run linting with ruff and auto-fix"),
-            ("format-check", "Check formatting without changes (CI mode)"),
-            ("validate-yaml", "Validate all YAML files"),
-        ]),
-        ("Testing", [
-            ("test-all", "Run all tests"),
-            ("test-api", "Run API tests only"),
-            ("test-web", "Run web tests (headless)"),
-            ("test-web-headed", "Run web tests with visible browser"),
-            ("test-smoke", "Run smoke tests only"),
-            ("test-parallel", "Run all tests in parallel"),
-        ]),
-        ("Pre-commit", [
-            ("install-hooks", "Install pre-commit hooks"),
-            ("pre-commit", "Run all pre-commit checks manually"),
-            ("pre-commit-update", "Update pre-commit hooks to latest versions"),
-        ]),
-        ("Combined", [
-            ("pr-ready", "Comprehensive PR check (format + test-all)"),
-        ]),
-        ("Cleanup", [
-            ("clean", "Clean up generated files"),
-            ("clean-videos", "Clean up video recordings only"),
-        ]),
+        (
+            "Format & Lint",
+            [
+                ("format", "Format and lint code (isort → black → ruff → validate-yaml)"),
+                ("lint", "Run linting with ruff (check only)"),
+                ("lint-fix", "Run linting with ruff and auto-fix"),
+                ("format-check", "Check formatting without changes (CI mode)"),
+                ("validate-yaml", "Validate all YAML files"),
+            ],
+        ),
+        (
+            "Testing",
+            [
+                ("test-all", "Run all tests"),
+                ("test-api", "Run API tests only"),
+                ("test-web", "Run web tests (headless)"),
+                ("test-web-headed", "Run web tests with visible browser"),
+                ("test-smoke", "Run smoke tests only"),
+                ("test-parallel", "Run all tests in parallel"),
+            ],
+        ),
+        (
+            "Pre-commit",
+            [
+                ("install-hooks", "Install pre-commit hooks"),
+                ("pre-commit", "Run all pre-commit checks manually"),
+                ("pre-commit-update", "Update pre-commit hooks to latest versions"),
+            ],
+        ),
+        (
+            "Combined",
+            [
+                ("pr-ready", "Comprehensive PR check (format + test-all)"),
+            ],
+        ),
+        (
+            "Cleanup",
+            [
+                ("clean", "Clean up generated files"),
+                ("clean-videos", "Clean up video recordings only"),
+            ],
+        ),
     ]
 
     for category, cmds in commands:

@@ -331,6 +331,59 @@ wait_with_retry(
 )
 ```
 
+### 5. Keep Tool Versions Synchronized
+
+**CRITICAL**: Tool versions must match between `pyproject.toml` and `.pre-commit-config.yaml`!
+
+```toml
+# ❌ Bad - Mismatched versions cause formatting inconsistencies
+# pyproject.toml
+[tool.poetry.group.dev.dependencies]
+black = "^23.7.0"      # ← Old version
+
+# .pre-commit-config.yaml
+- repo: https://github.com/psf/black
+  rev: 24.1.1          # ← New version (different formatting rules!)
+```
+
+```toml
+# ✅ Good - Synchronized versions
+# pyproject.toml
+[tool.poetry.group.dev.dependencies]
+black = "^24.1.1"
+ruff = "^0.1.14"
+isort = "^5.13.2"
+
+# .pre-commit-config.yaml
+- repo: https://github.com/psf/black
+  rev: 24.1.1          # ← Same version!
+- repo: https://github.com/astral-sh/ruff-pre-commit
+  rev: v0.1.14
+- repo: https://github.com/pycqa/isort
+  rev: 5.13.2
+```
+
+**Why This Matters:**
+- Different versions = different formatting rules
+- Code formatted locally may fail pre-commit hooks
+- Leads to frustrating "but I just formatted it!" moments
+
+**When Updating Tools:**
+1. Update **both files at once**
+2. Run `poetry lock && poetry install`
+3. Run `poetry run format` to reformat with new versions
+4. Reinstall hooks: `poetry run install-hooks`
+5. Commit the reformatted code
+
+**Quick Check:**
+```bash
+# Update pre-commit hook versions
+poetry run pre-commit autoupdate
+
+# Then manually sync pyproject.toml to match
+# Review changes before committing
+```
+
 ## 📞 Getting Help
 
 ### Documentation
