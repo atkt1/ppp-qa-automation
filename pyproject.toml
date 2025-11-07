@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "QA Test Automation Framework - Simplified Monorepo"
 authors = ["Your Team <team@example.com>"]
 readme = "README.md"
-package-mode = false
+packages = [{include = "scripts"}, {include = "core"}, {include = "team_alpha"}]
 
 [tool.poetry.dependencies]
 python = ">=3.9,<3.12"
@@ -22,6 +22,41 @@ pyyaml = "^6.0.3"
 black = "^23.7.0"
 ruff = "^0.0.285"
 isort = "^5.12.0"
+pre-commit = "^3.6.0"
+
+[tool.poetry.scripts]
+# Formatting and linting (cross-platform alternative to Makefile)
+format = "scripts.tasks:format_code"
+lint = "scripts.tasks:lint"
+lint-fix = "scripts.tasks:lint_fix"
+format-check = "scripts.tasks:format_check"
+validate-yaml = "scripts.tasks:validate_yaml"
+
+# Testing
+test-all = "scripts.tasks:test_all"
+test-api = "scripts.tasks:test_api"
+test-web = "scripts.tasks:test_web"
+test-web-headed = "scripts.tasks:test_web_headed"
+test-smoke = "scripts.tasks:test_smoke"
+test-parallel = "scripts.tasks:test_parallel"
+test-api-parallel = "scripts.tasks:test_api_parallel"
+test-web-parallel = "scripts.tasks:test_web_parallel"
+test-smoke-parallel = "scripts.tasks:test_smoke_parallel"
+
+# Pre-commit hooks
+install-hooks = "scripts.tasks:install_hooks"
+pre-commit = "scripts.tasks:pre_commit"
+pre-commit-update = "scripts.tasks:pre_commit_update"
+
+# Combined tasks
+pr-ready = "scripts.tasks:pr_ready"
+
+# Cleanup
+clean = "scripts.tasks:clean"
+clean-videos = "scripts.tasks:clean_videos"
+
+# Help
+list-commands = "scripts.tasks:list_commands"
 
 [build-system]
 requires = ["poetry-core"]
@@ -29,12 +64,12 @@ build-backend = "poetry.core.masonry.api"
 
 # Tool Configurations
 [tool.black]
-line-length = 88
+line-length = 130
 target-version = ['py39']
 
 [tool.ruff]
 select = ["E", "F", "W", "I", "N"]
-line-length = 88
+line-length = 130
 
 [tool.isort]
 profile = "black"

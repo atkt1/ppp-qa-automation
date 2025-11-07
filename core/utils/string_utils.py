@@ -14,15 +14,12 @@ Usage:
 """
 
 import re
-from typing import Optional, List, Union
+from typing import List, Optional, Union
+
 from core.logger import log
 
 
-def extract_price_from_text(
-    text: str,
-    currency_symbol: str = "$",
-    return_as_float: bool = False
-) -> Union[str, float, None]:
+def extract_price_from_text(text: str, currency_symbol: str = "$", return_as_float: bool = False) -> Union[str, float, None]:
     """
     Extract price from text using regex pattern.
 
@@ -57,10 +54,10 @@ def extract_price_from_text(
         if currency_symbol:
             # Escape special regex characters in currency symbol
             escaped_symbol = re.escape(currency_symbol)
-            pattern = rf'{escaped_symbol}[\d,]+(?:\.\d{{2}})?'
+            pattern = rf"{escaped_symbol}[\d,]+(?:\.\d{{2}})?"
         else:
             # No currency symbol, just match numbers
-            pattern = r'[\d,]+(?:\.\d{2})?'
+            pattern = r"[\d,]+(?:\.\d{2})?"
 
         matches = re.findall(pattern, text)
 
@@ -70,7 +67,7 @@ def extract_price_from_text(
 
             if return_as_float:
                 # Remove currency symbol and commas, convert to float
-                clean_price = re.sub(r'[^\d.]', '', price_str)
+                clean_price = re.sub(r"[^\d.]", "", price_str)
                 return float(clean_price)
 
             return price_str
@@ -82,11 +79,7 @@ def extract_price_from_text(
     return None
 
 
-def extract_number_from_text(
-    text: str,
-    pattern: str = r'\d+',
-    return_all: bool = False
-) -> Union[int, List[int], None]:
+def extract_number_from_text(text: str, pattern: str = r"\d+", return_all: bool = False) -> Union[int, List[int], None]:
     """
     Extract numbers from text.
 
@@ -147,10 +140,10 @@ def sanitize_text(text: str) -> str:
         return ""
 
     # Replace tabs and newlines with spaces
-    text = text.replace('\t', ' ').replace('\n', ' ').replace('\r', ' ')
+    text = text.replace("\t", " ").replace("\n", " ").replace("\r", " ")
 
     # Replace multiple spaces with single space
-    text = ' '.join(text.split())
+    text = " ".join(text.split())
 
     return text.strip()
 
@@ -175,15 +168,10 @@ def normalize_whitespace(text: str) -> str:
         return ""
 
     # Remove all types of whitespace and replace with single space
-    return ' '.join(text.split())
+    return " ".join(text.split())
 
 
-def truncate_text(
-    text: str,
-    max_length: int = 100,
-    suffix: str = "...",
-    word_boundary: bool = True
-) -> str:
+def truncate_text(text: str, max_length: int = 100, suffix: str = "...", word_boundary: bool = True) -> str:
     """
     Truncate text to maximum length.
 
@@ -215,18 +203,14 @@ def truncate_text(
 
     # Try to truncate at word boundary
     if word_boundary:
-        last_space = truncated.rfind(' ')
+        last_space = truncated.rfind(" ")
         if last_space > 0:
             truncated = truncated[:last_space]
 
     return truncated + suffix
 
 
-def remove_special_characters(
-    text: str,
-    keep_spaces: bool = True,
-    keep_chars: str = ""
-) -> str:
+def remove_special_characters(text: str, keep_spaces: bool = True, keep_chars: str = "") -> str:
     """
     Remove special characters from text, keeping only alphanumeric.
 
@@ -248,20 +232,20 @@ def remove_special_characters(
         return ""
 
     # Build pattern of characters to keep
-    pattern = r'[^a-zA-Z0-9'
+    pattern = r"[^a-zA-Z0-9"
 
     if keep_spaces:
-        pattern += r'\s'
+        pattern += r"\s"
 
     if keep_chars:
         # Escape special regex characters
         escaped_chars = re.escape(keep_chars)
         pattern += escaped_chars
 
-    pattern += ']'
+    pattern += "]"
 
     # Remove characters not in the keep pattern
-    cleaned = re.sub(pattern, '', text)
+    cleaned = re.sub(pattern, "", text)
 
     return cleaned
 
@@ -283,7 +267,7 @@ def extract_email_from_text(text: str) -> Optional[str]:
     if not text:
         return None
 
-    pattern = r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}'
+    pattern = r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
     matches = re.findall(pattern, text)
 
     if matches:
@@ -343,24 +327,24 @@ def clean_currency(price_str: str) -> float:
         raise ValueError("Empty price string")
 
     # Remove all non-numeric characters except decimal points and commas
-    cleaned = re.sub(r'[^\d.,]', '', price_str)
+    cleaned = re.sub(r"[^\d.,]", "", price_str)
 
     # Handle European format (1.299,99) vs US format (1,299.99)
     # If comma is after period, it's likely European format
-    if ',' in cleaned and '.' in cleaned:
-        if cleaned.rindex(',') > cleaned.rindex('.'):
+    if "," in cleaned and "." in cleaned:
+        if cleaned.rindex(",") > cleaned.rindex("."):
             # European format: replace period with nothing, comma with period
-            cleaned = cleaned.replace('.', '').replace(',', '.')
+            cleaned = cleaned.replace(".", "").replace(",", ".")
         else:
             # US format: just remove commas
-            cleaned = cleaned.replace(',', '')
-    elif ',' in cleaned:
+            cleaned = cleaned.replace(",", "")
+    elif "," in cleaned:
         # Only comma - could be decimal separator (European) or thousands (US)
         # If there are 2 digits after comma, likely decimal
-        if len(cleaned.split(',')[-1]) == 2:
-            cleaned = cleaned.replace(',', '.')
+        if len(cleaned.split(",")[-1]) == 2:
+            cleaned = cleaned.replace(",", ".")
         else:
-            cleaned = cleaned.replace(',', '')
+            cleaned = cleaned.replace(",", "")
 
     try:
         return float(cleaned)

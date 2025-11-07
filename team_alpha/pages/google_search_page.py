@@ -1,5 +1,6 @@
 import allure
-from playwright.sync_api import Page, Locator, expect
+from playwright.sync_api import Locator, Page
+
 from core.base.page_base import BasePage
 from core.logger import log
 from core.utils import handle_optional_dialog
@@ -36,11 +37,11 @@ class GoogleSearchPage(BasePage):
         Returns:
             self: For method chaining
         """
-        log.info(f"Opening Google Search page")
+        log.info("Opening Google Search page")
         self.navigate(self.url)  # Use parent's navigate() method
         self.wait_for_load_state("domcontentloaded")
         return self
-        
+
     @allure.step("Search for: {query}")
     def search(self, query: str):
         """
@@ -59,7 +60,7 @@ class GoogleSearchPage(BasePage):
             self.page,
             GoogleSearchLocators.COOKIE_ACCEPT_ALL,
             action="click",
-            timeout=2000
+            timeout=2000,
         )
 
         # Perform search
@@ -71,7 +72,7 @@ class GoogleSearchPage(BasePage):
         self.page.wait_for_load_state("domcontentloaded")
         log.info("Search completed")
         return self
-    
+
     @allure.step("Click on Shopping tab")
     def click_shopping_tab(self):
         """
@@ -85,7 +86,7 @@ class GoogleSearchPage(BasePage):
         self.page.wait_for_load_state("domcontentloaded")
         log.info("Navigated to Shopping results")
         return self
-    
+
     @allure.step("Verify search results are displayed")
     def verify_search_results_displayed(self):
         """
@@ -103,7 +104,9 @@ class GoogleSearchPage(BasePage):
 
         if "sorry/index" in current_url:
             log.warning("Google CAPTCHA detected - automated traffic blocked")
-            raise Exception("Google CAPTCHA detected. This is expected for automated tests. Try running with slower timing or different IP.")
+            raise Exception(
+                "Google CAPTCHA detected. This is expected for automated tests. Try running with slower timing or different IP."
+            )
 
         # Check if we're on a results page
         assert "google.com" in current_url, f"Not on Google domain: {current_url}"

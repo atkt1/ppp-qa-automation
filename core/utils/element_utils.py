@@ -17,8 +17,11 @@ Usage:
     text = safe_extract_text(element, default="Not found")
 """
 
-from typing import Optional, List, Any, Union
-from playwright.sync_api import Page, Locator, TimeoutError as PlaywrightTimeoutError
+from typing import List, Optional, Union
+
+from playwright.sync_api import Locator, Page
+from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
+
 from core.logger import log
 
 
@@ -27,7 +30,7 @@ def handle_optional_dialog(
     locator: Union[str, Locator],
     action: str = "click",
     timeout: int = 2000,
-    log_action: bool = True
+    log_action: bool = True,
 ) -> bool:
     """
     Handle optional dialogs like cookie consent, popups, notifications.
@@ -91,18 +94,12 @@ def handle_optional_dialog(
             return True
 
     except (PlaywrightTimeoutError, Exception) as e:
-        log.debug(
-            f"Optional dialog not found or could not be handled: {locator} ({type(e).__name__})")
+        log.debug(f"Optional dialog not found or could not be handled: {locator} ({type(e).__name__})")
 
     return False
 
 
-def safe_click(
-    locator: Locator,
-    timeout: int = 3000,
-    force: bool = False,
-    retry_count: int = 1
-) -> bool:
+def safe_click(locator: Locator, timeout: int = 3000, force: bool = False, retry_count: int = 1) -> bool:
     """
     Safely click an element with error handling.
 
@@ -136,22 +133,15 @@ def safe_click(
 
         except Exception as e:
             if attempt == retry_count:
-                log.warning(
-                    f"Failed to click element after {retry_count} attempts: {type(e).__name__}")
+                log.warning(f"Failed to click element after {retry_count} attempts: {type(e).__name__}")
                 return False
 
-            log.debug(
-                f"Click attempt {attempt} failed: {type(e).__name__}, retrying...")
+            log.debug(f"Click attempt {attempt} failed: {type(e).__name__}, retrying...")
 
     return False
 
 
-def safe_extract_text(
-    locator: Locator,
-    default: str = "",
-    timeout: int = 3000,
-    trim: bool = True
-) -> str:
+def safe_extract_text(locator: Locator, default: str = "", timeout: int = 3000, trim: bool = True) -> str:
     """
     Safely extract text from element with fallback.
 
@@ -189,12 +179,7 @@ def safe_extract_text(
     return default
 
 
-def safe_extract_attribute(
-    locator: Locator,
-    attribute: str,
-    default: str = "",
-    timeout: int = 3000
-) -> str:
+def safe_extract_attribute(locator: Locator, attribute: str, default: str = "", timeout: int = 3000) -> str:
     """
     Safely extract attribute value from element.
 
@@ -227,17 +212,13 @@ def safe_extract_attribute(
             if value is not None:
                 return value
     except Exception as e:
-        log.debug(
-            f"Failed to extract attribute '{attribute}': {type(e).__name__}")
+        log.debug(f"Failed to extract attribute '{attribute}': {type(e).__name__}")
 
     return default
 
 
 def try_multiple_locators(
-    page: Page,
-    locators: List[str],
-    timeout: int = 3000,
-    return_first: bool = True
+    page: Page, locators: List[str], timeout: int = 3000, return_first: bool = True
 ) -> Union[Optional[Locator], List[Locator]]:
     """
     Try multiple locators and return the first visible one or all matches.
@@ -299,12 +280,7 @@ def try_multiple_locators(
     return found_locators if found_locators else None
 
 
-def wait_for_element_count(
-    locator: Locator,
-    expected_count: int,
-    timeout: int = 10000,
-    operator: str = "equal"
-) -> bool:
+def wait_for_element_count(locator: Locator, expected_count: int, timeout: int = 10000, operator: str = "equal") -> bool:
     """
     Wait for element count to match condition.
 
@@ -333,6 +309,7 @@ def wait_for_element_count(
         ... )
     """
     import time
+
     start_time = time.time()
     elapsed = 0
 
@@ -353,8 +330,7 @@ def wait_for_element_count(
                 condition_met = current_count <= expected_count
 
             if condition_met:
-                log.debug(
-                    f"Element count condition met: {current_count} {operator} {expected_count}")
+                log.debug(f"Element count condition met: {current_count} {operator} {expected_count}")
                 return True
 
         except Exception as e:
@@ -367,12 +343,7 @@ def wait_for_element_count(
     return False
 
 
-def safe_fill(
-    locator: Locator,
-    text: str,
-    clear_first: bool = True,
-    timeout: int = 3000
-) -> bool:
+def safe_fill(locator: Locator, text: str, clear_first: bool = True, timeout: int = 3000) -> bool:
     """
     Safely fill input field with text.
 
@@ -427,7 +398,8 @@ def is_element_in_viewport(locator: Locator) -> bool:
     """
     try:
         # Use evaluate to check if element is in viewport
-        return locator.evaluate("""
+        return locator.evaluate(
+            """
             element => {
                 const rect = element.getBoundingClientRect();
                 return (
@@ -437,7 +409,8 @@ def is_element_in_viewport(locator: Locator) -> bool:
                     rect.right <= window.innerWidth
                 );
             }
-        """)
+        """
+        )
     except Exception as e:
         log.debug(f"Error checking if element in viewport: {type(e).__name__}")
         return False
@@ -464,7 +437,7 @@ def get_element_info(locator: Locator) -> dict:
         "text": "",
         "tag": "",
         "classes": [],
-        "attributes": {}
+        "attributes": {},
     }
 
     try:

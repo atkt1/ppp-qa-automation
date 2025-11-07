@@ -11,4 +11,4 @@ This package provides shared functionality for all teams including:
 from core.config import config
 from core.logger import log
 
-__all__ = ['config', 'log']
+__all__ = ["config", "log"]

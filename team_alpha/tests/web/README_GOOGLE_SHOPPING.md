@@ -133,15 +133,15 @@ print(f"Price: {price}")
 ## 🐛 Troubleshooting
 
 ### Test fails with CAPTCHA
-**Error**: `Google CAPTCHA detected`  
+**Error**: `Google CAPTCHA detected`
 **Solution**: Wait a few minutes and retry, or use a different network
 
 ### Price not found
-**Error**: `Price not found`  
+**Error**: `Price not found`
 **Solution**: Google may have changed selectors. Update `google_shopping_page.py` with new selectors
 
 ### Shopping tab not found
-**Error**: `Element not found`  
+**Error**: `Element not found`
 **Solution**: Google may have changed the layout. Check if Shopping results are available for your query
 
 ## 📚 Related Files
@@ -152,7 +152,7 @@ print(f"Price: {price}")
 
 ---
 
-**Created**: October 16, 2025  
-**Test Type**: Web UI Automation  
-**Framework**: Playwright + Pytest  
+**Created**: October 16, 2025
+**Test Type**: Web UI Automation
+**Framework**: Playwright + Pytest
 **Page Object Pattern**: Implemented

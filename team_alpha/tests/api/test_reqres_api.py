@@ -4,11 +4,12 @@ API Tests for ReqRes API (https://reqres.in/)
 Tests cover user management, authentication, and resource endpoints.
 """
 
-import pytest
 import allure
+import pytest
 from playwright.sync_api import APIRequestContext
-from team_alpha.api_clients.reqres_api_client import ReqResApiClient
+
 from core.logger import log
+from team_alpha.api_clients.reqres_api_client import ReqResApiClient
 
 
 @pytest.mark.team_alpha

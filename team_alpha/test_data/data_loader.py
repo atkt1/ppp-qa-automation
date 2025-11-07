@@ -15,9 +15,10 @@ Usage:
     products = get_all_products()
 """
 
-from pathlib import Path
 from dataclasses import dataclass
-from typing import List, Dict
+from pathlib import Path
+from typing import Dict, List
+
 from core.data import BaseYamlDataLoader
 
 
@@ -33,6 +34,7 @@ class ProductData:
         max_price: Maximum expected price
         description: Product description for documentation
     """
+
     search_term: str
     expected_keywords: List[str]
     min_price: float
@@ -43,6 +45,7 @@ class ProductData:
 @dataclass
 class ResultCountConfig:
     """Configuration for expected result counts."""
+
     minimum_results: int
     maximum_results: int
 
@@ -50,6 +53,7 @@ class ResultCountConfig:
 @dataclass
 class TestConfig:
     """General test configuration settings."""
+
     timeout: int
     retry_attempts: int
     wait_for_results: int
@@ -91,10 +95,7 @@ class TeamAlphaDataLoader(BaseYamlDataLoader):
             Dictionary mapping product keys to ProductData objects
         """
         all_products = self.get_all_section_items("products")
-        return {
-            key: ProductData(**value)
-            for key, value in all_products.items()
-        }
+        return {key: ProductData(**value) for key, value in all_products.items()}
 
     def get_result_count_config(self) -> ResultCountConfig:
         """Get result count configuration."""

@@ -22,9 +22,11 @@ Usage:
     user = loader.get_user("admin_user")
 """
 
-import yaml
 from pathlib import Path
-from typing import Dict, Any, List, Optional, Union
+from typing import Any, Dict, List, Optional, Union
+
+import yaml
+
 from core.logger import log
 
 
@@ -45,7 +47,7 @@ class BaseYamlDataLoader:
     """
 
     # Class-level cache for singleton instances per subclass
-    _instances: Dict[type, 'BaseYamlDataLoader'] = {}
+    _instances: Dict[type, "BaseYamlDataLoader"] = {}
     _data_cache: Dict[type, Dict[str, Any]] = {}
 
     def __new__(cls, yaml_file: Optional[Path] = None):
@@ -85,7 +87,7 @@ class BaseYamlDataLoader:
         log.info(f"Loading YAML data from: {self.yaml_file}")
 
         try:
-            with open(self.yaml_file, 'r', encoding='utf-8') as f:
+            with open(self.yaml_file, "r", encoding="utf-8") as f:
                 data = yaml.safe_load(f)
 
             if data is None:
@@ -129,10 +131,7 @@ class BaseYamlDataLoader:
         """
         if section_name not in self.data:
             available = list(self.data.keys())
-            raise KeyError(
-                f"Section '{section_name}' not found in YAML. "
-                f"Available sections: {', '.join(available)}"
-            )
+            raise KeyError(f"Section '{section_name}' not found in YAML. " f"Available sections: {', '.join(available)}")
 
         return self.data[section_name]
 
@@ -159,8 +158,7 @@ class BaseYamlDataLoader:
         if item_key not in section:
             available = list(section.keys())
             raise KeyError(
-                f"Item '{item_key}' not found in section '{section_name}'. "
-                f"Available items: {', '.join(available)}"
+                f"Item '{item_key}' not found in section '{section_name}'. " f"Available items: {', '.join(available)}"
             )
 
         return section[item_key]
@@ -283,5 +281,5 @@ class BaseYamlDataLoader:
 
     def __repr__(self) -> str:
         """String representation of the loader."""
-        sections = ', '.join(self.list_sections())
+        sections = ", ".join(self.list_sections())
         return f"{self.__class__.__name__}(file={self.yaml_file.name}, sections=[{sections}])"
