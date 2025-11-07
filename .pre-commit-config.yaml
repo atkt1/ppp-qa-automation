@@ -1,0 +1,51 @@
+# Pre-commit hooks configuration for QA Automation Framework
+# See https://pre-commit.com for more information
+
+repos:
+  # 1. Import sorting with isort (MUST run before Black)
+  - repo: https://github.com/pycqa/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+        name: isort (import sorting)
+
+  # 2. Code formatting with Black (runs after isort)
+  - repo: https://github.com/psf/black
+    rev: 24.1.1
+    hooks:
+      - id: black
+        name: black (code formatting)
+
+  # 3. Linting with Ruff (auto-fix enabled)
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.1.14
+    hooks:
+      - id: ruff
+        name: ruff (linting with auto-fix)
+        args: [--fix]
+
+  # 4. Standard pre-commit hooks (security & file checks)
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: check-yaml
+        name: check-yaml (basic YAML validation)
+      - id: end-of-file-fixer
+        name: end-of-file-fixer (ensure newline at EOF)
+      - id: trailing-whitespace
+        name: trailing-whitespace (remove trailing spaces)
+      - id: detect-private-key
+        name: detect-private-key (security check)
+      - id: check-added-large-files
+        name: check-added-large-files (prevent large commits)
+        args: ['--maxkb=1000']
+
+  # 5. Custom YAML validation (runs after basic check-yaml)
+  - repo: local
+    hooks:
+      - id: validate-yaml-custom
+        name: validate-yaml-custom (duplicate keys, indentation)
+        entry: poetry run python scripts/validate_yaml.py
+        language: system
+        pass_filenames: false
+        files: \.(yaml|yml)$

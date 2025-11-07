@@ -14,31 +14,59 @@ This framework provides a complete solution for web UI and API test automation, 
 
 ### Key Features
 
-✅ **Multi-Team Support** - Independent test suites for different teams  
-✅ **Web & API Testing** - Comprehensive coverage for both UI and API  
-✅ **Page Object Model** - Maintainable UI test structure  
-✅ **YAML Test Data** - Type-safe data management  
-✅ **Parallel Execution** - Fast test runs with pytest-xdist  
-✅ **Rich Reporting** - Allure reports with screenshots and videos  
-✅ **CI/CD Ready** - GitLab CI integration included  
+✅ **Multi-Team Support** - Independent test suites for different teams
+✅ **Web & API Testing** - Comprehensive coverage for both UI and API
+✅ **Page Object Model** - Maintainable UI test structure
+✅ **YAML Test Data** - Type-safe data management
+✅ **Parallel Execution** - Fast test runs with pytest-xdist
+✅ **Rich Reporting** - Allure reports with screenshots and videos
+✅ **CI/CD Ready** - GitLab CI integration included
 
 ---
 
 ## 🚀 Quick Start
 
+### Mac/Linux
+```bash
+# 1. Install dependencies
+make install
+
+# 2. Run tests
+make test-all
+
+# 3. View reports
+make allure-serve
+```
+
+### Windows (or Cross-Platform)
 ```bash
 # 1. Install dependencies
 poetry install
-
-# 2. Install browsers
 poetry run playwright install chromium
 
-# 3. Run tests
-make test-all
+# 2. Run tests
+poetry run test-all
 
-# 4. View reports
-make allure-serve
+# 3. View reports
+make allure-serve  # If make available, or manually run allure
 ```
+
+---
+
+## 🖥️ Cross-Platform Commands
+
+This framework supports **two methods** for running commands:
+
+| Task | Makefile (Mac/Linux) | Poetry Scripts (Windows/All) |
+|------|---------------------|------------------------------|
+| Format code | `make format` | `poetry run format` |
+| Run all tests | `make test-all` | `poetry run test-all` |
+| Run API tests | `make test-api` | `poetry run test-api` |
+| Install hooks | `make install-hooks` | `poetry run install-hooks` |
+| PR ready check | `make pr-ready` | `poetry run pr-ready` |
+| List commands | `make help` | `poetry run list-commands` |
+
+**Both methods do the same thing** - Poetry scripts are provided for Windows users who don't have `make` installed.
 
 ---
 
@@ -51,6 +79,8 @@ This project includes comprehensive documentation:
 | **[PROJECT_GUIDE.md](./PROJECT_GUIDE.md)** | Complete project guide with detailed explanations of every component | All users |
 | **[QUICK_REFERENCE.md](./QUICK_REFERENCE.md)** | Fast lookup for common tasks, code patterns, and commands | Daily users |
 | **[ARCHITECTURE.md](./ARCHITECTURE.md)** | Visual architecture diagrams and data flow explanations | Architects & developers |
+| **[CONTRIBUTING.md](./CONTRIBUTING.md)** | How to contribute, coding standards, and development workflow | Contributors |
+| **[PULL_REQUEST_GUIDELINES.md](./PULL_REQUEST_GUIDELINES.md)** | Detailed PR requirements, checklist, and review standards | Contributors & reviewers |
 | **[README.md](./README.md)** | This file - overview and quick start | New users |
 
 ### Where to Start?
@@ -58,6 +88,8 @@ This project includes comprehensive documentation:
 - **New to the project?** → Start with [PROJECT_GUIDE.md](./PROJECT_GUIDE.md)
 - **Need quick answers?** → Check [QUICK_REFERENCE.md](./QUICK_REFERENCE.md)
 - **Understanding design?** → Read [ARCHITECTURE.md](./ARCHITECTURE.md)
+- **Contributing code?** → Read [CONTRIBUTING.md](./CONTRIBUTING.md)
+- **Submitting a PR?** → Follow [PULL_REQUEST_GUIDELINES.md](./PULL_REQUEST_GUIDELINES.md)
 - **Writing tests?** → See examples in `team_alpha/tests/`
 
 ---
@@ -147,16 +179,16 @@ ENV=staging poetry run pytest
 def test_product_search(page):
     # Load test data
     product_data = load_product_data("samsung_s24_ultra")
-    
+
     # Initialize page objects
     search_page = GoogleSearchPage(page)
     shopping_page = GoogleShoppingPage(page)
-    
+
     # Perform test
     search_page.navigate()
     search_page.search(product_data.search_term)
     search_page.click_shopping_tab()
-    
+
     # Verify
     price = shopping_page.get_first_product_price()
     assert "$" in price
@@ -169,10 +201,10 @@ def test_product_search(page):
 def test_get_users(api_request_context):
     # Initialize API client
     client = ReqResApiClient(api_request_context)
-    
+
     # Make request
     response = client.get_users(page=2)
-    
+
     # Verify
     assert response.ok
     body = response.json()
@@ -271,7 +303,7 @@ from core.base.page_base import BasePage
 class MyPage(BasePage):
     def __init__(self, page):
         super().__init__(page)
-    
+
     def my_action(self):
         # Implementation
         pass

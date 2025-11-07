@@ -20,6 +20,11 @@ install: ## Install all dependencies
 	poetry install
 	poetry run playwright install
 
+install-hooks: ## Install pre-commit hooks
+	poetry run pre-commit install
+	@echo "✅ Pre-commit hooks installed successfully!"
+	@echo "Hooks will run automatically on git commit"
+
 install-allure: ## Install Allure CLI (macOS with Homebrew)
 	@echo "Installing Allure CLI..."
 	brew install allure
@@ -80,9 +85,55 @@ clean-videos: ## Clean up video recordings only
 	rm -rf videos/*.webm
 	@echo "Video files cleaned up"
 
-format: ## Format code with black and isort
-	poetry run black .
-	poetry run isort .
+format: ## Format and lint code (isort → black → ruff --fix → validate-yaml)
+	@echo "Running code formatting and linting..."
+	@echo "1/4 Running isort..."
+	@poetry run isort .
+	@echo "2/4 Running black..."
+	@poetry run black .
+	@echo "3/4 Running ruff with auto-fix..."
+	@poetry run ruff check --fix .
+	@echo "4/4 Validating YAML files..."
+	@poetry run python scripts/validate_yaml.py
+	@echo ""
+	@echo "✅ All formatting and validation complete!"
 
 lint: ## Run linting with ruff
 	poetry run ruff check .
+
+lint-fix: ## Run linting with auto-fix
+	poetry run ruff check --fix .
+
+format-check: ## Check if formatting is needed (CI mode)
+	poetry run isort --check-only .
+	poetry run black --check .
+	poetry run ruff check .
+
+validate-yaml: ## Validate all YAML files (syntax, duplicates, indentation)
+	@poetry run python scripts/validate_yaml.py
+
+pre-commit: ## Run all pre-commit checks manually
+	@poetry run pre-commit run --all-files
+
+pre-commit-update: ## Update pre-commit hooks to latest versions
+	@poetry run pre-commit autoupdate
+
+pr-ready: format test-all ## Comprehensive check before submitting PR (format + test)
+	@echo ""
+	@echo "======================================"
+	@echo "✅ PR Ready Checks Completed!"
+	@echo "======================================"
+	@echo "✓ Code formatted (Black + isort)"
+	@echo "✓ Linting passed (Ruff)"
+	@echo "✓ YAML files validated"
+	@echo "✓ All tests passed"
+	@echo ""
+	@echo "Your code is ready for PR submission!"
+	@echo "Don't forget to:"
+	@echo "  - Update documentation if needed"
+	@echo "  - Add/update test cases"
+	@echo "  - Fill out PR template completely"
+	@echo "======================================"
+
+test-all: ## Run all tests (alias for 'test')
+	poetry run pytest -v

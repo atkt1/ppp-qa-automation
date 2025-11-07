@@ -28,7 +28,16 @@
       "Bash(make clean-videos:*)",
       "Bash(poetry show:*)",
       "Bash(poetry add:*)",
-      "Bash(tree:*)"
+      "Bash(tree:*)",
+      "Bash(bash:*)",
+      "Bash(poetry lock:*)",
+      "Bash(make install-hooks:*)",
+      "Bash(make format:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git reset:*)",
+      "Bash(make pre-commit:*)",
+      "Bash(poetry run:*)"
     ],
     "deny": [],
     "ask": []
