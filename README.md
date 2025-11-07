@@ -31,7 +31,7 @@ This framework provides a complete solution for web UI and API test automation, 
 # 1. Install dependencies
 make install
 
-# 2. Run tests
+# 2. Run tests (Team Alpha)
 make test-all
 
 # 3. View reports
@@ -44,8 +44,8 @@ make allure-serve
 poetry install
 poetry run playwright install chromium
 
-# 2. Run tests
-poetry run test-all
+# 2. Run tests (Team Alpha)
+poetry run alpha-test-all
 
 # 3. View reports
 make allure-serve  # If make available, or manually run allure
@@ -60,13 +60,49 @@ This framework supports **two methods** for running commands:
 | Task | Makefile (Mac/Linux) | Poetry Scripts (Windows/All) |
 |------|---------------------|------------------------------|
 | Format code | `make format` | `poetry run format` |
-| Run all tests | `make test-all` | `poetry run test-all` |
-| Run API tests | `make test-api` | `poetry run test-api` |
+| Run Team Alpha tests | `make test-all` | `poetry run alpha-test-all` |
+| Run Team Beta tests | N/A | `poetry run beta-test-all` |
 | Install hooks | `make install-hooks` | `poetry run install-hooks` |
 | PR ready check | `make pr-ready` | `poetry run pr-ready` |
 | List commands | `make help` | `poetry run list-commands` |
 
 **Both methods do the same thing** - Poetry scripts are provided for Windows users who don't have `make` installed.
+
+### Team-Specific Commands
+
+The framework now supports **explicit team-prefixed commands** to run tests for specific teams:
+
+```bash
+# Team Alpha
+poetry run alpha-test-all         # Run all tests for Team Alpha
+poetry run alpha-test-api         # Run API tests for Team Alpha
+poetry run alpha-test-web         # Run web tests for Team Alpha
+
+# Team Beta
+poetry run beta-test-all          # Run all tests for Team Beta
+poetry run beta-test-api          # Run API tests for Team Beta
+poetry run beta-test-web          # Run web tests for Team Beta
+
+# Team Gamma
+poetry run gamma-test-all         # Run all tests for Team Gamma
+poetry run gamma-test-api         # Run API tests for Team Gamma
+poetry run gamma-test-web         # Run web tests for Team Gamma
+```
+
+**Available Team-Specific Commands:**
+- `{team}-test-all` - Run all tests for the team
+- `{team}-test-api` - Run API tests only
+- `{team}-test-web` - Run web tests (headless)
+- `{team}-test-web-headed` - Run web tests with visible browser
+- `{team}-test-smoke` - Run smoke tests only
+- `{team}-test-api-parallel` - Run API tests in parallel
+- `{team}-test-web-parallel` - Run web tests in parallel
+- `{team}-test-smoke-parallel` - Run smoke tests in parallel
+
+To see all available commands, run:
+```bash
+poetry run list-commands
+```
 
 ---
 

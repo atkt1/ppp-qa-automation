@@ -1,6 +1,15 @@
 # QA Automation Framework - Makefile
 
-.PHONY: help install install-allure test test-api test-web test-smoke clean clean-videos allure-report allure-serve
+.PHONY: help install install-allure clean clean-videos allure-report allure-serve \
+	alpha-test-all alpha-test-api alpha-test-web alpha-test-web-headed alpha-test-smoke \
+	alpha-test-api-parallel alpha-test-web-parallel alpha-test-smoke-parallel \
+	beta-test-all beta-test-api beta-test-web beta-test-web-headed beta-test-smoke \
+	beta-test-api-parallel beta-test-web-parallel beta-test-smoke-parallel \
+	gamma-test-all gamma-test-api gamma-test-web gamma-test-web-headed gamma-test-smoke \
+	gamma-test-api-parallel gamma-test-web-parallel gamma-test-smoke-parallel \
+	test-all test-one test-one-headed test-collect fixtures \
+	format lint lint-fix format-check validate-yaml \
+	install-hooks pre-commit pre-commit-update pr-ready
 
 # Unexport environment variables to let .env file take precedence
 unexport ENV
@@ -30,35 +39,93 @@ install-allure: ## Install Allure CLI (macOS with Homebrew)
 	brew install allure
 	@echo "Allure installation complete. Run 'allure --version' to verify."
 
-test: ## Run all tests
-	poetry run pytest -v
+# ==========================================
+# Testing - Team Alpha
+# ==========================================
 
-test-parallel: ## Run all tests in parallel (auto-detect CPU cores)
-	poetry run pytest -v -n auto
+alpha-test-all: ## Run all tests for Team Alpha
+	poetry run pytest team_alpha/ -v
 
-test-parallel-4: ## Run tests in parallel with 4 workers
-	poetry run pytest -v -n 4
-
-test-api: ## Run API tests only
+alpha-test-api: ## Run API tests for Team Alpha
 	poetry run pytest team_alpha/tests/api/ -v
 
-test-api-parallel: ## Run API tests in parallel
+alpha-test-api-parallel: ## Run API tests in parallel for Team Alpha
 	poetry run pytest team_alpha/tests/api/ -v -n auto
 
-test-web: ## Run web tests (headless)
+alpha-test-web: ## Run web tests (headless) for Team Alpha
 	poetry run pytest team_alpha/tests/web/ -v
 
-test-web-parallel: ## Run web tests in parallel (headless)
+alpha-test-web-parallel: ## Run web tests in parallel for Team Alpha
 	poetry run pytest team_alpha/tests/web/ -v -n auto
 
-test-web-headed: ## Run web tests with visible browser
+alpha-test-web-headed: ## Run web tests with visible browser for Team Alpha
 	poetry run pytest team_alpha/tests/web/ --headed -v
 
-test-smoke: ## Run smoke tests only
-	poetry run pytest -m smoke -v
+alpha-test-smoke: ## Run smoke tests for Team Alpha
+	poetry run pytest team_alpha/ -m smoke -v
 
-test-smoke-parallel: ## Run smoke tests in parallel
-	poetry run pytest -m smoke -v -n auto
+alpha-test-smoke-parallel: ## Run smoke tests in parallel for Team Alpha
+	poetry run pytest team_alpha/ -m smoke -v -n auto
+
+# ==========================================
+# Testing - Team Beta
+# ==========================================
+
+beta-test-all: ## Run all tests for Team Beta
+	poetry run pytest team_beta/ -v
+
+beta-test-api: ## Run API tests for Team Beta
+	poetry run pytest team_beta/tests/api/ -v
+
+beta-test-api-parallel: ## Run API tests in parallel for Team Beta
+	poetry run pytest team_beta/tests/api/ -v -n auto
+
+beta-test-web: ## Run web tests (headless) for Team Beta
+	poetry run pytest team_beta/tests/web/ -v
+
+beta-test-web-parallel: ## Run web tests in parallel for Team Beta
+	poetry run pytest team_beta/tests/web/ -v -n auto
+
+beta-test-web-headed: ## Run web tests with visible browser for Team Beta
+	poetry run pytest team_beta/tests/web/ --headed -v
+
+beta-test-smoke: ## Run smoke tests for Team Beta
+	poetry run pytest team_beta/ -m smoke -v
+
+beta-test-smoke-parallel: ## Run smoke tests in parallel for Team Beta
+	poetry run pytest team_beta/ -m smoke -v -n auto
+
+# ==========================================
+# Testing - Team Gamma
+# ==========================================
+
+gamma-test-all: ## Run all tests for Team Gamma
+	poetry run pytest team_gamma/ -v
+
+gamma-test-api: ## Run API tests for Team Gamma
+	poetry run pytest team_gamma/tests/api/ -v
+
+gamma-test-api-parallel: ## Run API tests in parallel for Team Gamma
+	poetry run pytest team_gamma/tests/api/ -v -n auto
+
+gamma-test-web: ## Run web tests (headless) for Team Gamma
+	poetry run pytest team_gamma/tests/web/ -v
+
+gamma-test-web-parallel: ## Run web tests in parallel for Team Gamma
+	poetry run pytest team_gamma/tests/web/ -v -n auto
+
+gamma-test-web-headed: ## Run web tests with visible browser for Team Gamma
+	poetry run pytest team_gamma/tests/web/ --headed -v
+
+gamma-test-smoke: ## Run smoke tests for Team Gamma
+	poetry run pytest team_gamma/ -m smoke -v
+
+gamma-test-smoke-parallel: ## Run smoke tests in parallel for Team Gamma
+	poetry run pytest team_gamma/ -m smoke -v -n auto
+
+# ==========================================
+# Testing - Utilities
+# ==========================================
 
 test-one: ## Run a single test (usage: make test-one TEST=path/to/test.py::TestClass::test_method)
 	poetry run pytest $(TEST) -v
@@ -118,7 +185,9 @@ pre-commit: ## Run all pre-commit checks manually
 pre-commit-update: ## Update pre-commit hooks to latest versions
 	@poetry run pre-commit autoupdate
 
-pr-ready: format test-all ## Comprehensive check before submitting PR (format + test)
+test-all: alpha-test-all ## Run all tests (defaults to Team Alpha for backward compatibility)
+
+pr-ready: format alpha-test-all ## Comprehensive check before submitting PR (format + test)
 	@echo ""
 	@echo "======================================"
 	@echo "✅ PR Ready Checks Completed!"
@@ -126,7 +195,7 @@ pr-ready: format test-all ## Comprehensive check before submitting PR (format + 
 	@echo "✓ Code formatted (Black + isort)"
 	@echo "✓ Linting passed (Ruff)"
 	@echo "✓ YAML files validated"
-	@echo "✓ All tests passed"
+	@echo "✓ All tests passed (Team Alpha)"
 	@echo ""
 	@echo "Your code is ready for PR submission!"
 	@echo "Don't forget to:"
@@ -134,6 +203,3 @@ pr-ready: format test-all ## Comprehensive check before submitting PR (format + 
 	@echo "  - Add/update test cases"
 	@echo "  - Fill out PR template completely"
 	@echo "======================================"
-
-test-all: ## Run all tests (alias for 'test')
-	poetry run pytest -v

@@ -123,53 +123,131 @@ def validate_yaml() -> None:
 
 
 # ==========================================
-# Testing
+# Testing - Team Specific
 # ==========================================
 
 
-def test_all() -> None:
-    """Run all tests."""
-    sys.exit(run_command("poetry run pytest -v"))
-
-
-def test_api() -> None:
-    """Run API tests only."""
+# Team Alpha
+def test_api_alpha() -> None:
+    """Run API tests for Team Alpha."""
     sys.exit(run_command("poetry run pytest team_alpha/tests/api/ -v"))
 
 
-def test_web() -> None:
-    """Run web UI tests (headless)."""
+def test_web_alpha() -> None:
+    """Run web tests (headless) for Team Alpha."""
     sys.exit(run_command("poetry run pytest team_alpha/tests/web/ -v"))
 
 
-def test_web_headed() -> None:
-    """Run web UI tests with visible browser."""
+def test_web_headed_alpha() -> None:
+    """Run web tests with visible browser for Team Alpha."""
     sys.exit(run_command("poetry run pytest team_alpha/tests/web/ --headed -v"))
 
 
-def test_smoke() -> None:
-    """Run smoke tests only."""
-    sys.exit(run_command("poetry run pytest -m smoke -v"))
+def test_all_alpha() -> None:
+    """Run all tests for Team Alpha."""
+    sys.exit(run_command("poetry run pytest team_alpha/ -v"))
 
 
-def test_parallel() -> None:
-    """Run all tests in parallel (auto-detect CPU cores)."""
-    sys.exit(run_command("poetry run pytest -v -n auto"))
+def test_smoke_alpha() -> None:
+    """Run smoke tests for Team Alpha."""
+    sys.exit(run_command("poetry run pytest team_alpha/ -m smoke -v"))
 
 
-def test_api_parallel() -> None:
-    """Run API tests in parallel."""
+def test_api_parallel_alpha() -> None:
+    """Run API tests in parallel for Team Alpha."""
     sys.exit(run_command("poetry run pytest team_alpha/tests/api/ -v -n auto"))
 
 
-def test_web_parallel() -> None:
-    """Run web tests in parallel (headless)."""
+def test_web_parallel_alpha() -> None:
+    """Run web tests in parallel for Team Alpha."""
     sys.exit(run_command("poetry run pytest team_alpha/tests/web/ -v -n auto"))
 
 
-def test_smoke_parallel() -> None:
-    """Run smoke tests in parallel."""
-    sys.exit(run_command("poetry run pytest -m smoke -v -n auto"))
+def test_smoke_parallel_alpha() -> None:
+    """Run smoke tests in parallel for Team Alpha."""
+    sys.exit(run_command("poetry run pytest team_alpha/ -m smoke -v -n auto"))
+
+
+# Team Beta
+def test_api_beta() -> None:
+    """Run API tests for Team Beta."""
+    sys.exit(run_command("poetry run pytest team_beta/tests/api/ -v"))
+
+
+def test_web_beta() -> None:
+    """Run web tests (headless) for Team Beta."""
+    sys.exit(run_command("poetry run pytest team_beta/tests/web/ -v"))
+
+
+def test_web_headed_beta() -> None:
+    """Run web tests with visible browser for Team Beta."""
+    sys.exit(run_command("poetry run pytest team_beta/tests/web/ --headed -v"))
+
+
+def test_all_beta() -> None:
+    """Run all tests for Team Beta."""
+    sys.exit(run_command("poetry run pytest team_beta/ -v"))
+
+
+def test_smoke_beta() -> None:
+    """Run smoke tests for Team Beta."""
+    sys.exit(run_command("poetry run pytest team_beta/ -m smoke -v"))
+
+
+def test_api_parallel_beta() -> None:
+    """Run API tests in parallel for Team Beta."""
+    sys.exit(run_command("poetry run pytest team_beta/tests/api/ -v -n auto"))
+
+
+def test_web_parallel_beta() -> None:
+    """Run web tests in parallel for Team Beta."""
+    sys.exit(run_command("poetry run pytest team_beta/tests/web/ -v -n auto"))
+
+
+def test_smoke_parallel_beta() -> None:
+    """Run smoke tests in parallel for Team Beta."""
+    sys.exit(run_command("poetry run pytest team_beta/ -m smoke -v -n auto"))
+
+
+# Team Gamma
+def test_api_gamma() -> None:
+    """Run API tests for Team Gamma."""
+    sys.exit(run_command("poetry run pytest team_gamma/tests/api/ -v"))
+
+
+def test_web_gamma() -> None:
+    """Run web tests (headless) for Team Gamma."""
+    sys.exit(run_command("poetry run pytest team_gamma/tests/web/ -v"))
+
+
+def test_web_headed_gamma() -> None:
+    """Run web tests with visible browser for Team Gamma."""
+    sys.exit(run_command("poetry run pytest team_gamma/tests/web/ --headed -v"))
+
+
+def test_all_gamma() -> None:
+    """Run all tests for Team Gamma."""
+    sys.exit(run_command("poetry run pytest team_gamma/ -v"))
+
+
+def test_smoke_gamma() -> None:
+    """Run smoke tests for Team Gamma."""
+    sys.exit(run_command("poetry run pytest team_gamma/ -m smoke -v -n auto"))
+
+
+def test_api_parallel_gamma() -> None:
+    """Run API tests in parallel for Team Gamma."""
+    sys.exit(run_command("poetry run pytest team_gamma/tests/api/ -v -n auto"))
+
+
+def test_web_parallel_gamma() -> None:
+    """Run web tests in parallel for Team Gamma."""
+    sys.exit(run_command("poetry run pytest team_gamma/tests/web/ -v -n auto"))
+
+
+def test_smoke_parallel_gamma() -> None:
+    """Run smoke tests in parallel for Team Gamma."""
+    sys.exit(run_command("poetry run pytest team_gamma/ -m smoke -v -n auto"))
 
 
 # ==========================================
@@ -320,14 +398,42 @@ def list_commands() -> None:
             ],
         ),
         (
-            "Testing",
+            "Testing - Team Alpha",
             [
-                ("test-all", "Run all tests"),
-                ("test-api", "Run API tests only"),
-                ("test-web", "Run web tests (headless)"),
-                ("test-web-headed", "Run web tests with visible browser"),
-                ("test-smoke", "Run smoke tests only"),
-                ("test-parallel", "Run all tests in parallel"),
+                ("alpha-test-all", "Run all tests for Team Alpha"),
+                ("alpha-test-api", "Run API tests for Team Alpha"),
+                ("alpha-test-web", "Run web tests (headless) for Team Alpha"),
+                ("alpha-test-web-headed", "Run web tests with visible browser for Team Alpha"),
+                ("alpha-test-smoke", "Run smoke tests for Team Alpha"),
+                ("alpha-test-api-parallel", "Run API tests in parallel for Team Alpha"),
+                ("alpha-test-web-parallel", "Run web tests in parallel for Team Alpha"),
+                ("alpha-test-smoke-parallel", "Run smoke tests in parallel for Team Alpha"),
+            ],
+        ),
+        (
+            "Testing - Team Beta",
+            [
+                ("beta-test-all", "Run all tests for Team Beta"),
+                ("beta-test-api", "Run API tests for Team Beta"),
+                ("beta-test-web", "Run web tests (headless) for Team Beta"),
+                ("beta-test-web-headed", "Run web tests with visible browser for Team Beta"),
+                ("beta-test-smoke", "Run smoke tests for Team Beta"),
+                ("beta-test-api-parallel", "Run API tests in parallel for Team Beta"),
+                ("beta-test-web-parallel", "Run web tests in parallel for Team Beta"),
+                ("beta-test-smoke-parallel", "Run smoke tests in parallel for Team Beta"),
+            ],
+        ),
+        (
+            "Testing - Team Gamma",
+            [
+                ("gamma-test-all", "Run all tests for Team Gamma"),
+                ("gamma-test-api", "Run API tests for Team Gamma"),
+                ("gamma-test-web", "Run web tests (headless) for Team Gamma"),
+                ("gamma-test-web-headed", "Run web tests with visible browser for Team Gamma"),
+                ("gamma-test-smoke", "Run smoke tests for Team Gamma"),
+                ("gamma-test-api-parallel", "Run API tests in parallel for Team Gamma"),
+                ("gamma-test-web-parallel", "Run web tests in parallel for Team Gamma"),
+                ("gamma-test-smoke-parallel", "Run smoke tests in parallel for Team Gamma"),
             ],
         ),
         (

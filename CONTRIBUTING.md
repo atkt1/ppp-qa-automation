@@ -21,7 +21,7 @@ poetry run install-hooks        # Windows/Cross-platform
 
 # Verify setup
 make test-all                   # Mac/Linux
-poetry run test-all             # Windows/Cross-platform
+poetry run alpha-test-all       # Windows/Cross-platform
 ```
 
 ### 🖥️ Cross-Platform Commands
@@ -38,11 +38,36 @@ make pr-ready
 **Method 2: Poetry Scripts** (Windows/Mac/Linux, no `make` required)
 ```bash
 poetry run format
-poetry run test-all
+poetry run alpha-test-all  # Or beta-test-all, gamma-test-all
 poetry run pr-ready
 ```
 
 Both methods do the same thing - choose what works for your platform!
+
+#### Team-Specific Commands
+
+Poetry scripts also support **team-prefixed commands** for running tests for specific teams:
+
+```bash
+# Team Alpha
+poetry run alpha-test-all         # Run all tests for Team Alpha
+poetry run alpha-test-api         # Run API tests only
+poetry run alpha-test-web         # Run web tests (headless)
+
+# Team Beta
+poetry run beta-test-all          # Run all tests for Team Beta
+poetry run beta-test-api          # Run API tests only
+poetry run beta-test-web         # Run web tests (headless)
+
+# Team Gamma
+poetry run gamma-test-all         # Run all tests for Team Gamma
+poetry run gamma-test-api          # Run API tests only
+poetry run gamma-test-web         # Run web tests (headless)
+```
+
+Available team-specific commands: `{team}-test-all`, `{team}-test-api`, `{team}-test-web`, `{team}-test-web-headed`, `{team}-test-smoke`, `{team}-test-api-parallel`, `{team}-test-web-parallel`, `{team}-test-smoke-parallel`
+
+To see all available commands: `poetry run list-commands`
 
 ## 📋 Before Submitting a PR
 
@@ -67,7 +92,7 @@ poetry run pr-ready           # Comprehensive PR check (format + tests)
 poetry run format             # Format code (isort → black → ruff → validate-yaml)
 poetry run lint               # Check for linting issues
 poetry run validate-yaml      # Validate YAML files
-poetry run test-all           # Run all tests
+poetry run alpha-test-all     # Run all tests for Team Alpha
 poetry run list-commands      # List all available commands
 ```
 

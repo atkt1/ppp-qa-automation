@@ -32,16 +32,35 @@ lint-fix = "scripts.tasks:lint_fix"
 format-check = "scripts.tasks:format_check"
 validate-yaml = "scripts.tasks:validate_yaml"
 
-# Testing
-test-all = "scripts.tasks:test_all"
-test-api = "scripts.tasks:test_api"
-test-web = "scripts.tasks:test_web"
-test-web-headed = "scripts.tasks:test_web_headed"
-test-smoke = "scripts.tasks:test_smoke"
-test-parallel = "scripts.tasks:test_parallel"
-test-api-parallel = "scripts.tasks:test_api_parallel"
-test-web-parallel = "scripts.tasks:test_web_parallel"
-test-smoke-parallel = "scripts.tasks:test_smoke_parallel"
+# Testing - Team Alpha
+alpha-test-all = "scripts.tasks:test_all_alpha"
+alpha-test-api = "scripts.tasks:test_api_alpha"
+alpha-test-web = "scripts.tasks:test_web_alpha"
+alpha-test-web-headed = "scripts.tasks:test_web_headed_alpha"
+alpha-test-smoke = "scripts.tasks:test_smoke_alpha"
+alpha-test-api-parallel = "scripts.tasks:test_api_parallel_alpha"
+alpha-test-web-parallel = "scripts.tasks:test_web_parallel_alpha"
+alpha-test-smoke-parallel = "scripts.tasks:test_smoke_parallel_alpha"
+
+# Testing - Team Beta
+beta-test-all = "scripts.tasks:test_all_beta"
+beta-test-api = "scripts.tasks:test_api_beta"
+beta-test-web = "scripts.tasks:test_web_beta"
+beta-test-web-headed = "scripts.tasks:test_web_headed_beta"
+beta-test-smoke = "scripts.tasks:test_smoke_beta"
+beta-test-api-parallel = "scripts.tasks:test_api_parallel_beta"
+beta-test-web-parallel = "scripts.tasks:test_web_parallel_beta"
+beta-test-smoke-parallel = "scripts.tasks:test_smoke_parallel_beta"
+
+# Testing - Team Gamma
+gamma-test-all = "scripts.tasks:test_all_gamma"
+gamma-test-api = "scripts.tasks:test_api_gamma"
+gamma-test-web = "scripts.tasks:test_web_gamma"
+gamma-test-web-headed = "scripts.tasks:test_web_headed_gamma"
+gamma-test-smoke = "scripts.tasks:test_smoke_gamma"
+gamma-test-api-parallel = "scripts.tasks:test_api_parallel_gamma"
+gamma-test-web-parallel = "scripts.tasks:test_web_parallel_gamma"
+gamma-test-smoke-parallel = "scripts.tasks:test_smoke_parallel_gamma"
 
 # Pre-commit hooks
 install-hooks = "scripts.tasks:install_hooks"
