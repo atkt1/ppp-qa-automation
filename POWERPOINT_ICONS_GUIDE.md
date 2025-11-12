@@ -3,6 +3,165 @@
 
 ---
 
+## 🏗️ TEST AUTOMATION FRAMEWORK ICON
+
+### **Best Icons for "Test Framework" Concept**
+
+**Option 1: Building Construction (Recommended) 🏗️**
+```
+🏗️
+```
+**Copy this**: 🏗️
+- Represents: Building/constructing a framework
+- Meaning: Solid foundation, architecture, scalable structure
+- Size: 48pt or larger
+- Color: Keep default or use blue (#3B82F6)
+- **Best for**: Title slides, framework overview
+
+---
+
+**Option 2: Tools/Toolbox 🛠️**
+```
+🛠️
+```
+**Copy this**: 🛠️
+- Represents: Test automation tools and utilities
+- Meaning: Framework provides tools, utilities, helper functions
+- Alternative: 🔧 (single wrench)
+- Size: 48pt+
+- Color: Keep default or use gray (#6B7280)
+- **Best for**: Features slide, capabilities overview
+
+---
+
+**Option 3: Target/Bullseye 🎯**
+```
+🎯
+```
+**Copy this**: 🎯
+- Represents: Accuracy, precision testing, hitting goals
+- Meaning: Quality assurance, targeted testing
+- Size: 48pt+
+- Color: Keep default or use red center (#EF4444)
+- **Best for**: Quality/accuracy messaging, testing goals
+
+---
+
+**Option 4: Puzzle Pieces 🧩**
+```
+🧩
+```
+**Copy this**: 🧩
+- Represents: Framework components fitting together
+- Meaning: Modular architecture, integration, completeness
+- Size: 48pt+
+- Color: Keep default or use purple (#8B5CF6)
+- **Best for**: Architecture diagrams, component overview
+
+---
+
+**Option 5: Shield 🛡️**
+```
+🛡️
+```
+**Copy this**: 🛡️
+- Represents: Protection, quality assurance, defense against bugs
+- Meaning: Reliability, safety, testing as protection
+- Size: 48pt+
+- Color: Keep default or use green (#10B981)
+- **Best for**: Quality/reliability messaging, QA emphasis
+
+---
+
+**Option 6: Gear/Settings ⚙️**
+```
+⚙️
+```
+**Copy this**: ⚙️
+- Represents: System configuration, automation engine
+- Meaning: Framework machinery, automation at work
+- Size: 48pt+
+- Color: Keep default or use gray (#6B7280)
+- **Best for**: Technical slides, configuration sections
+
+---
+
+**Option 7: Test Tube + Gear Combo 🧪⚙️**
+```
+🧪⚙️
+```
+**Copy this**: 🧪⚙️ (side by side)
+- Represents: Testing + Automation
+- Meaning: Complete test automation framework
+- Size: 36pt each
+- **Best for**: Unique identifier for your framework
+
+---
+
+**Option 8: Custom Combined Icon (Create in PPT)**
+```
+[🎯][🔧]
+```
+**Create this in PowerPoint** (3 minutes):
+1. Insert → Shapes → Square (rounded corners)
+2. Size: 1.5" x 1.5"
+3. Fill: Gradient (blue to green)
+4. Add icon inside: 🎯 or 🏗️
+5. Add text below: "Test Framework"
+6. Group all elements
+
+**Result**: Professional custom framework logo
+
+---
+
+### **RECOMMENDED: Framework Icon Selection Guide**
+
+**For Title/Main Slides**:
+- Use: 🏗️ (Building) - Shows structure and foundation
+- Why: Immediately recognizable, represents "framework" concept
+
+**For Technical Diagrams**:
+- Use: 🧩 (Puzzle) - Shows components and integration
+- Why: Represents modular architecture
+
+**For Quality/Benefits Slides**:
+- Use: 🛡️ (Shield) or 🎯 (Target) - Shows quality assurance
+- Why: Emphasizes protection and accuracy
+
+**For Comparison Slides** (Old vs New):
+```
+OLD: 🔧 (single tool, manual)
+NEW: 🏗️ (complete framework, structured)
+```
+
+---
+
+### **Quick Usage Examples**
+
+**Slide Title with Framework Icon**:
+```
+🏗️ TEST AUTOMATION FRAMEWORK
+   Playwright + Python + Poetry
+```
+
+**Framework Components**:
+```
+🏗️ Core Framework
+   ├── 🧩 Base Classes
+   ├── 🛠️ Utilities
+   └── ⚙️ Configuration
+```
+
+**Benefits List**:
+```
+🎯 Accurate & Reliable Testing
+🛡️ Quality Assurance Protection
+⚙️ Automated Execution
+🏗️ Scalable Architecture
+```
+
+---
+
 ## 🎭 PLAYWRIGHT ICON
 
 ### **Official Playwright Logo**
@@ -513,9 +672,26 @@ Right (New): 🎭 (Playwright in green)
 
 ### **Copy These Complete Sets**
 
+**Framework Title (Main Slide)**:
+```
+🏗️ TEST AUTOMATION FRAMEWORK
+   Playwright + Python + Poetry + AI
+```
+
+**Framework with Context**:
+```
+🏗️ Modern Test Framework  |  🛡️ Quality Assurance  |  🎯 Precision Testing
+```
+
 **Technology Stack Header**:
 ```
 🎭 Playwright  |  🐍 Python  |  📦 Poetry  |  🧪 pytest
+```
+
+**Complete Stack with Framework**:
+```
+🏗️ Framework: Playwright + Python + Poetry
+🎭 Browser Automation  |  🐍 Language  |  📦 Dependencies  |  🧪 Test Runner
 ```
 
 **Benefits Row**:
@@ -525,7 +701,12 @@ Right (New): 🎭 (Playwright in green)
 
 **Features Row**:
 ```
-🤖 AI-Powered  |  📊 Rich Reports  |  🔧 Low Maintenance
+🤖 AI-Powered  |  📊 Rich Reports  |  🔧 Low Maintenance  |  🏗️ Scalable
+```
+
+**Framework Architecture**:
+```
+🏗️ Framework  →  🧩 Components  →  🛠️ Utilities  →  ⚙️ Config
 ```
 
 **Test Types**:
@@ -536,6 +717,11 @@ Right (New): 🎭 (Playwright in green)
 **AI Capabilities**:
 ```
 🤖 GitHub Copilot (3-5x faster)  |  🔮 MCP (Self-healing)
+```
+
+**Framework Evolution**:
+```
+OLD: 🔧 Manual Tools  →  NEW: 🏗️ Complete Framework
 ```
 
 ---
@@ -575,6 +761,11 @@ Se  Selenium             🎭  Playwright
 ╔════════════════════════════════════════════╗
 ║     QUICK ICON REFERENCE                   ║
 ╠════════════════════════════════════════════╣
+║                                            ║
+║  FRAMEWORK ICONS:                          ║
+║  🏗️ Framework  | 🛠️ Tools                 ║
+║  🎯 Testing    | 🧩 Components             ║
+║  🛡️ QA         | ⚙️ Automation             ║
 ║                                            ║
 ║  MAIN TECHNOLOGIES:                        ║
 ║  🎭 Playwright  | Se Selenium              ║
@@ -616,25 +807,45 @@ Se  Selenium             🎭  Playwright
 ## 🎨 RECOMMENDED ICON SET FOR YOUR PRESENTATION
 
 ### **Slide 1 (Title)**:
-🎭 Playwright (72pt, green #2EAD33)
+🏗️ Framework Icon (72pt, blue #3B82F6) + 🎭 Playwright (64pt, green #2EAD33)
+
+**Suggested title layout**:
+```
+🏗️ TEST AUTOMATION FRAMEWORK
+   Playwright + Python + Poetry + AI
+```
 
 ### **Slide 2 (Challenge)**:
-Se Selenium in red circle (48pt) + ❌
+Se Selenium in red circle (48pt) + ❌ + 🔧 (manual tools icon)
 
 ### **Slide 3 (Technology Evolution)**:
-Se Selenium (left, red) vs 🎭 Playwright (right, green)
+**Old Framework**: Se Selenium (left, red) + 🔧 (manual)
+**New Framework**: 🏗️ (framework) + 🎭 Playwright (right, green)
 
 ### **Slide 4 (Key Features)**:
 ⚡💰🚀🤖📊🔧 (all 48pt, color-coded)
+**Add**: 🏗️ (scalable framework) at the end
 
 ### **Slide 5 (Architecture)**:
-Use emoji icons for each layer
+🏗️ Framework (top, 72pt)
+🧩 Components layer
+🛠️ Utilities layer
+⚙️ Configuration layer
 
 ### **Slide 6 (Business Impact)**:
 💰 (72pt, green) as focal point
+**Secondary**: 🎯 (accuracy/quality) in corner
+
+### **Slide 7 (Current Status)**:
+✅ (success) + 🏗️ (framework complete)
 
 ### **Slide 8 (AI Capabilities)**:
 🤖 Copilot (left) | 🔮 MCP (right)
+
+### **Slide 10 (Roadmap)**:
+🏗️ Phase 1: Framework (complete)
+🚀 Phase 2: Scale to more teams
+🤖 Phase 3: AI enhancements
 
 ---
 
