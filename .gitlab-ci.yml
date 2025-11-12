@@ -1,5 +1,6 @@
 stages:
   - lint
+  - smoke
   - test
   - report
 
@@ -39,7 +40,26 @@ lint-and-format:
       - screenshots/
     expire_in: 1 day
 
-# Job for Team Alpha
+# Stage 2: Smoke Tests for Team Alpha (Main Branch Only)
+smoke:team_alpha:
+  extends: .test_template
+  stage: smoke
+  variables:
+    TEAM_DIR: src/teams/team_alpha
+  script:
+    - poetry -C $TEAM_DIR install
+    - poetry -C $TEAM_DIR run pytest -m smoke -n auto --dist=loadscope --alluredir=$CI_PROJECT_DIR/allure-results
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+  artifacts:
+    when: always
+    paths:
+      - allure-results/
+      - videos/
+      - screenshots/
+    expire_in: 1 day
+
+# Stage 3: Full Test Suite for Team Alpha
 test:team_alpha:
   extends: .test_template
   variables:
@@ -63,7 +83,7 @@ test:team_alpha:
 #         - src/core/**/*
 #     - if: '$CI_COMMIT_BRANCH == "main"'
 
-# Stage 3: Generate and Deploy Allure Report
+# Stage 4: Generate and Deploy Allure Report
 generate-report:
   stage: report
   image: frankescobar/allure-docker-service:latest
@@ -78,4 +98,6 @@ generate-report:
     - if: '$CI_COMMIT_BRANCH == "main"'
       when: on_success
   dependencies:
+    - smoke:team_alpha
     - test:team_alpha
+    
