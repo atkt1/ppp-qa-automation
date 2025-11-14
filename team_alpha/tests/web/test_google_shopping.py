@@ -2,9 +2,8 @@ import allure
 import pytest
 from playwright.sync_api import Page
 
-from team_alpha.pages.google_search_page import GoogleSearchPage
-from team_alpha.pages.google_shopping_page import GoogleShoppingPage
-from team_alpha.test_data import get_result_config, load_product_data
+from team_alpha.actions import ShoppingActions
+from team_alpha.test_data import load_product_data
 
 
 @pytest.mark.team_alpha
@@ -13,9 +12,11 @@ from team_alpha.test_data import get_result_config, load_product_data
 @allure.story("Product Search and Price Extraction")
 class TestGoogleShopping:
     """
-    Test suite for Google Shopping functionality.
+    Test suite for Google Shopping functionality using Action Composition.
 
-    Tests cover searching for products and extracting pricing information.
+    Tests use ShoppingActions class to compose high-level business workflows
+    from reusable actions. This provides better readability and maintainability
+    while preserving detailed Allure reporting.
     """
 
     @pytest.mark.smoke
@@ -26,51 +27,13 @@ class TestGoogleShopping:
         """
         Test to search for Samsung S24 Ultra and get the price from first listing.
 
-        Steps:
-        1. Navigate to Google
-        2. Search for product from test data
-        3. Click on Shopping tab
-        4. Extract price from first listing
+        Uses action composition to create a fluent, readable test while
+        maintaining detailed Allure step reporting.
         """
-        # Load test data from YAML
-        product_data = load_product_data("samsung_s24_ultra")
+        actions = ShoppingActions(page, load_product_data)
 
-        with allure.step("Initialize page objects"):
-            search_page = GoogleSearchPage(page)
-            shopping_page = GoogleShoppingPage(page)
-
-        with allure.step("Navigate to Google homepage"):
-            search_page.open()
-
-        with allure.step(f"Search for '{product_data.search_term}'"):
-            search_page.search(product_data.search_term)
-
-        with allure.step("Verify search results are displayed"):
-            search_page.verify_search_results_displayed()
-
-        with allure.step("Click on Shopping tab"):
-            search_page.click_shopping_tab()
-
-        with allure.step("Verify shopping results are displayed"):
-            shopping_page.verify_shopping_results_displayed()
-
-        with allure.step("Extract price from first product listing"):
-            price = shopping_page.get_first_product_price()
-
-            # Attach price to Allure report
-            allure.attach(
-                price,
-                name="First Product Price",
-                attachment_type=allure.attachment_type.TEXT,
-            )
-
-            print(f"\n{'='*60}")
-            print(f"{product_data.description} - First Listing Price: {price}")
-            print(f"{'='*60}\n")
-
-        with allure.step("Verify price was extracted"):
-            assert price != "Price not found", "Failed to extract price from first listing"
-            assert "$" in price, f"Price format unexpected: {price}"
+        # Compose test from reusable actions with fluent interface
+        (actions.search_for_product("samsung_s24_ultra").extract_and_verify_price())
 
     @allure.title("Get Samsung S24 Ultra Product Details")
     @allure.description("Extract complete product details including title and price")
@@ -78,38 +41,12 @@ class TestGoogleShopping:
     def test_samsung_s24_ultra_product_details(self, page: Page):
         """
         Test to get complete product details for Samsung S24 Ultra.
+
+        Demonstrates action composition for complex workflows.
         """
-        # Load test data from YAML
-        product_data = load_product_data("samsung_s24_ultra")
+        actions = ShoppingActions(page, load_product_data)
 
-        with allure.step("Initialize page objects"):
-            search_page = GoogleSearchPage(page)
-            shopping_page = GoogleShoppingPage(page)
-
-        with allure.step("Navigate to Google and search"):
-            search_page.open()
-            search_page.search(product_data.search_term)
-            search_page.click_shopping_tab()
-
-        with allure.step("Get product details"):
-            details = shopping_page.get_first_product_details()
-
-            # Attach details to report
-            details_text = f"Title: {details['title']}\nPrice: {details['price']}"
-            allure.attach(
-                details_text,
-                name="Product Details",
-                attachment_type=allure.attachment_type.TEXT,
-            )
-
-            print(f"\n{'='*60}")
-            print("Product Details:")
-            print(f"  Title: {details['title']}")
-            print(f"  Price: {details['price']}")
-            print(f"{'='*60}\n")
-
-        with allure.step("Verify details were extracted"):
-            assert details["price"] != "Price not found", "Failed to extract price"
+        (actions.search_for_product("samsung_s24_ultra").get_product_details().verify_product_details_valid())
 
     @allure.title("Verify Multiple Shopping Results Displayed")
     @allure.description("Check that multiple product listings are displayed")
@@ -117,32 +54,41 @@ class TestGoogleShopping:
     def test_multiple_shopping_results(self, page: Page):
         """
         Test to verify multiple shopping results are displayed.
+
+        Shows how action composition simplifies result validation.
         """
-        # Load test data from YAML
-        product_data = load_product_data("samsung_s24_ultra")
-        result_config = get_result_config()
+        actions = ShoppingActions(page, load_product_data)
 
-        with allure.step("Initialize page objects"):
-            search_page = GoogleSearchPage(page)
-            shopping_page = GoogleShoppingPage(page)
+        (actions.search_for_product("samsung_s24_ultra").verify_search_results())
 
-        with allure.step("Navigate and search"):
-            search_page.open()
-            search_page.search(product_data.search_term)
-            search_page.click_shopping_tab()
+    @allure.title("Search and Verify Product Contains Keywords")
+    @allure.description("Verify product search results contain expected keywords")
+    @allure.severity(allure.severity_level.NORMAL)
+    def test_search_and_verify_keywords(self, page: Page):
+        """
+        Test searching and verifying product contains expected keywords.
 
-        with allure.step("Count product listings"):
-            product_count = shopping_page.get_product_count()
+        Demonstrates composing multiple validation actions.
+        """
+        actions = ShoppingActions(page, load_product_data)
 
-            allure.attach(
-                str(product_count),
-                name="Product Count",
-                attachment_type=allure.attachment_type.TEXT,
-            )
+        (
+            actions.search_for_product("samsung_s24_ultra")
+            .verify_search_results(min_count=3)
+            .verify_product_contains_keywords(["Samsung", "S24"])
+        )
 
-            print(f"\nFound {product_count} product listings\n")
+    @allure.title("Complete Product Search Workflow")
+    @allure.description("Execute complete end-to-end product search workflow")
+    @allure.severity(allure.severity_level.CRITICAL)
+    def test_complete_product_search_workflow(self, page: Page):
+        """
+        Comprehensive test demonstrating complete product search workflow.
 
-        with allure.step("Verify multiple results exist"):
-            assert (
-                product_count >= result_config.minimum_results
-            ), f"Expected at least {result_config.minimum_results} products, found {product_count}"
+        This test showcases how action composition enables complex,
+        multi-step workflows while maintaining clarity.
+        """
+        actions = ShoppingActions(page, load_product_data)
+
+        # Use high-level workflow action
+        actions.complete_product_search_workflow("samsung_s24_ultra", min_results=5)
